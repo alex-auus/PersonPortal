@@ -6,7 +6,7 @@ import Nav from "react-bootstrap/Nav";
 
 const Navigation = () => {
   const location = useLocation();
-  debugger;
+  
   return (
     <Navbar expand="sm" bg="dark" variant="dark">
       <Navbar.Brand href="/">People Portal</Navbar.Brand>

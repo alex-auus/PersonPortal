@@ -4,6 +4,8 @@ import { Switch, Route } from "react-router-dom";
 import "./App.scss";
 
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import Navigation from "./components/navigation/navigation.component";
 
@@ -15,10 +17,14 @@ const App: React.FC = () => {
     <>
       <Navigation />
       <Container fluid>
-        <Switch>
-          <Route exact path="/" component={PersonsPage} />
-          <Route exact path="/add-person" component={AddPersonPage} />
-        </Switch>
+        <Row>
+          <Col>
+            <Switch>
+              <Route exact path="/" component={PersonsPage} />
+              <Route exact path="/add-person" component={AddPersonPage} />
+            </Switch>
+          </Col>
+        </Row>
       </Container>
     </>
   );
