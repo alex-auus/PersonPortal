@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Projects\\StandardsAustralia\\api\\api.csproj",
+  "FilePath": "c:\\Projects\\StandardsAustralia\\api\\PeoplePortal.Api.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "3.0",
@@ -14389,7 +14389,7 @@
     ],
     "CSharpLanguageVersion": 800
   },
-  "RootNamespace": "api",
+  "RootNamespace": "PeoplePortal.Api",
   "Documents": [],
   "SerializationFormat": "0.2"
 }

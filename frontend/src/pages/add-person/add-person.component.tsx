@@ -9,6 +9,13 @@ import Card from "react-bootstrap/Card";
 
 const AddPersonPage = () => {
   const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
+    status: true,
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
     const form = event.currentTarget;
@@ -16,9 +23,16 @@ const AddPersonPage = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const newState = { ...formData, [name]: value };
+    setFormData(newState);
+  };
+
+  const otherSelected = true;
 
   return (
     <Card>
@@ -26,37 +40,44 @@ const AddPersonPage = () => {
         <Card.Title>Add person</Card.Title>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group as={Col} md="6" controlId="validationCustom01">
+            <Form.Group as={Col} md="6" controlId="formFirstName">
               <Form.Label>First name</Form.Label>
               <Form.Control
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
                 required
                 type="text"
                 placeholder="First name"
-                defaultValue="Mark"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="6" controlId="validationCustom02">
+            <Form.Group as={Col} md="6" controlId="formLastName">
               <Form.Label>Last name</Form.Label>
               <Form.Control
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
                 required
                 type="text"
                 placeholder="Last name"
-                defaultValue="Otto"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+            <Form.Group as={Col} md="12" controlId="formEmail">
               <Form.Label>Email</Form.Label>
               <InputGroup>
                 <Form.Control
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   type="email"
-                  placeholder="Username"
+                  placeholder="Email"
                   aria-describedby="inputGroupPrepend"
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  Please choose a username.
+                  Please enter a valid email.
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
@@ -66,26 +87,46 @@ const AddPersonPage = () => {
               <Form.Label as="legend" column sm={2}>
                 Gender
               </Form.Label>
-              <Col sm={10}>
-                <Form.Check
-                  type="radio"
-                  label="Male"
-                  name="genderRadios"
-                  id="formHorizontalRadios1"
-                />
-                <Form.Check
-                  type="radio"
-                  label="Female"
-                  name="genderRadios"
-                  id="formHorizontalRadios2"
-                />
-                <Form.Check
-                  type="radio"
-                  label="Other"
-                  name="genderRadios"
-                  id="formHorizontalRadios3"
-                />
-              </Col>
+              <Form.Check
+                checked={formData.gender === "Male"}
+                value="Male"
+                onChange={handleChange}
+                required
+                inline
+                type="radio"
+                label="Male"
+                name="gender"
+                id="genderRadiosMale"
+              />
+              <Form.Check
+                checked={formData.gender === "Female"}
+                value="Female"
+                onChange={handleChange}
+                inline
+                type="radio"
+                label="Female"
+                name="gender"
+                id="genderRadiosFemale"
+              />
+              <Form.Check
+                checked={formData.gender === "Other"}
+                value="Other"
+                onChange={handleChange}
+                inline
+                type="radio"
+                label="Other"
+                name="gender"
+                id="genderRadiosOther"
+              />
+              {formData.gender === "Other" && (
+                <Col xs="auto">
+                  <Form.Control
+                    required={otherSelected}
+                    type="text"
+                    placeholder="Other"
+                  />
+                </Col>
+              )}
             </Form.Group>
           </fieldset>
           <fieldset>
@@ -93,20 +134,21 @@ const AddPersonPage = () => {
               <Form.Label as="legend" column sm={2}>
                 Status
               </Form.Label>
-              <Col sm={10}>
-                <Form.Check
-                  type="radio"
-                  label="Yes"
-                  name="statusRadios"
-                  id="statusRadios1"
-                />
-                <Form.Check
-                  type="radio"
-                  label="No"
-                  name="statusRadios"
-                  id="statusRadios2"
-                />
-              </Col>
+              <Form.Check
+                required
+                inline
+                type="radio"
+                label="Yes"
+                name="statusRadios"
+                id="statusRadios1"
+              />
+              <Form.Check
+                inline
+                type="radio"
+                label="No"
+                name="statusRadios"
+                id="statusRadios2"
+              />
             </Form.Group>
           </fieldset>
           <Button type="submit">Submit form</Button>
@@ -116,28 +158,12 @@ const AddPersonPage = () => {
   );
 };
 
-/*
-   <Form.Group as={Col} md="3" controlId="validationCustom04">
-              <Form.Label>State</Form.Label>
-              <Form.Control type="text" placeholder="State" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid state.
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom05">
-              <Form.Label>Zip</Form.Label>
-              <Form.Control type="text" placeholder="Zip" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid zip.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Form.Row>
-          <Form.Group>
-            <Form.Check
-              required
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-            />
-          </Form.Group>*/
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  gender: string;
+  status: boolean;
+}
 
 export default AddPersonPage;
