@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -25,7 +26,7 @@ const AddPersonPage = () => {
         <Card.Title>Add person</Card.Title>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
+            <Form.Group as={Col} md="6" controlId="validationCustom01">
               <Form.Label>First name</Form.Label>
               <Form.Control
                 required
@@ -35,7 +36,7 @@ const AddPersonPage = () => {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
+            <Form.Group as={Col} md="6" controlId="validationCustom02">
               <Form.Label>Last name</Form.Label>
               <Form.Control
                 required
@@ -45,14 +46,11 @@ const AddPersonPage = () => {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-              <Form.Label>Username</Form.Label>
+            <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+              <Form.Label>Email</Form.Label>
               <InputGroup>
-                <InputGroup.Prepend>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                </InputGroup.Prepend>
                 <Form.Control
-                  type="text"
+                  type="email"
                   placeholder="Username"
                   aria-describedby="inputGroupPrepend"
                   required
@@ -63,15 +61,63 @@ const AddPersonPage = () => {
               </InputGroup>
             </Form.Group>
           </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md="6" controlId="validationCustom03">
-              <Form.Label>City</Form.Label>
-              <Form.Control type="text" placeholder="City" required />
-              <Form.Control.Feedback type="invalid">
-                Please provide a valid city.
-              </Form.Control.Feedback>
+          <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Gender
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="Male"
+                  name="genderRadios"
+                  id="formHorizontalRadios1"
+                />
+                <Form.Check
+                  type="radio"
+                  label="Female"
+                  name="genderRadios"
+                  id="formHorizontalRadios2"
+                />
+                <Form.Check
+                  type="radio"
+                  label="Other"
+                  name="genderRadios"
+                  id="formHorizontalRadios3"
+                />
+              </Col>
             </Form.Group>
-            <Form.Group as={Col} md="3" controlId="validationCustom04">
+          </fieldset>
+          <fieldset>
+            <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                Status
+              </Form.Label>
+              <Col sm={10}>
+                <Form.Check
+                  type="radio"
+                  label="Yes"
+                  name="statusRadios"
+                  id="statusRadios1"
+                />
+                <Form.Check
+                  type="radio"
+                  label="No"
+                  name="statusRadios"
+                  id="statusRadios2"
+                />
+              </Col>
+            </Form.Group>
+          </fieldset>
+          <Button type="submit">Submit form</Button>
+        </Form>
+      </Card.Body>
+    </Card>
+  );
+};
+
+/*
+   <Form.Group as={Col} md="3" controlId="validationCustom04">
               <Form.Label>State</Form.Label>
               <Form.Control type="text" placeholder="State" required />
               <Form.Control.Feedback type="invalid">
@@ -92,12 +138,6 @@ const AddPersonPage = () => {
               label="Agree to terms and conditions"
               feedback="You must agree before submitting."
             />
-          </Form.Group>
-          <Button type="submit">Submit form</Button>
-        </Form>
-      </Card.Body>
-    </Card>
-  );
-};
+          </Form.Group>*/
 
 export default AddPersonPage;
