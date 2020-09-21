@@ -23,7 +23,7 @@ const Navigation = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto" activeKey={location.pathname}>
-          <Nav.Link onClick={handleClick("/")}>List</Nav.Link>
+          <Nav.Link onClick={handleClick("/")}>People</Nav.Link>
           <Nav.Link onClick={handleClick("/add-person")}>Add Person</Nav.Link>
         </Nav>
       </Navbar.Collapse>
