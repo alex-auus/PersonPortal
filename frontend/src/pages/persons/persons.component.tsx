@@ -11,31 +11,34 @@ const PersonsPage: React.FC = () => {
   return (
     <Card>
       <Card.Body>
-        <Table size="sm" responsive striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {MOCK_DATA.slice(0, 11).map((md) => (
-              <tr key={md.id}>
-                <td>{md.id}</td>
-                <td>{md.first_name}</td>
-                <td>{md.last_name}</td>
-                <td>{md.email}</td>
-                <td>{md.gender}</td>
-                <td>{md.status ? "true" : "false"}</td>
+        <Card.Title>Persons</Card.Title>
+        <Card.Text>
+          <Table size="sm" responsive striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-        <PaginationBar />
+            </thead>
+            <tbody>
+              {MOCK_DATA.slice(0, 11).map((md) => (
+                <tr key={md.id}>
+                  <td>{md.id}</td>
+                  <td>{md.first_name}</td>
+                  <td>{md.last_name}</td>
+                  <td>{md.email}</td>
+                  <td>{md.gender}</td>
+                  <td>{md.status ? "true" : "false"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <PaginationBar />
+        </Card.Text>
       </Card.Body>
     </Card>
   );

@@ -8,12 +8,12 @@ const Navigation = () => {
   const history = useHistory();
   const location = useLocation();
 
-  function handleClick(path: string) {
+  const handleClick = (path: string) => {
     return (event: React.MouseEvent) => {
       event.preventDefault();
       history.push(path);
     };
-  }
+  };
 
   return (
     <Navbar expand="sm" bg="dark" variant="dark">

@@ -17,7 +17,7 @@ const App: React.FC = () => {
   return (
     <>
       <Navigation />
-      <Container fluid>
+      <Container className="main-container" fluid>
         <Row>
           <Col>
             <Switch>
