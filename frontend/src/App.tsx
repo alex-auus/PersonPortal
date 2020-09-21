@@ -11,6 +11,7 @@ import Navigation from "./components/navigation/navigation.component";
 
 import PersonsPage from "./pages/persons/persons.component";
 import AddPersonPage from "./pages/add-person/add-person.component";
+import NotFoundPage from "./pages/not-found/not-found.component";
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Switch>
               <Route exact path="/" component={PersonsPage} />
               <Route exact path="/add-person" component={AddPersonPage} />
+              <Route component={NotFoundPage} />
             </Switch>
           </Col>
         </Row>

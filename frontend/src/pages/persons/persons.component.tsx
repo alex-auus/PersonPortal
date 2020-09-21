@@ -5,6 +5,8 @@ import Card from "react-bootstrap/Card";
 
 import MOCK_DATA from "./MOCK_DATA.json";
 
+import PaginationBar from "../../components/pagination-bar/pagination-bar.component";
+
 const PersonsPage: React.FC = () => {
   return (
     <Card>
@@ -21,8 +23,8 @@ const PersonsPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {MOCK_DATA.map((md) => (
-              <tr>
+            {MOCK_DATA.slice(0, 11).map((md) => (
+              <tr key={md.id}>
                 <td>{md.id}</td>
                 <td>{md.first_name}</td>
                 <td>{md.last_name}</td>
@@ -33,6 +35,7 @@ const PersonsPage: React.FC = () => {
             ))}
           </tbody>
         </Table>
+        <PaginationBar />
       </Card.Body>
     </Card>
   );
