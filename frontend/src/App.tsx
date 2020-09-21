@@ -10,7 +10,7 @@ import Navigation from "./components/navigation/navigation.component";
 import PersonsPage from "./pages/persons/persons.component";
 import AddPersonPage from "./pages/add-person/add-person.component";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <>
       <Navigation />
