@@ -51,8 +51,8 @@ namespace PeoplePortal.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult Post(Person person)
         {
-            Thread.Sleep(2000); // to simulate processing time to be able to see busy indicator
-            
+            Thread.Sleep(1300); // to simulate processing time to be able to see busy indicator
+
             // TODO need to add validation possibly using action filter
             person = peopleRepository.CreatePerson(person);
 
