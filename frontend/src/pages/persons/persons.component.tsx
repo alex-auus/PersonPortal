@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 
-import PaginationBar from "../../components/pagination-bar/pagination-bar.component";
+// import PaginationBar from "../../components/pagination-bar/pagination-bar.component";
 import { Person } from "../../models/person";
 
 const PersonsPage: React.FC = () => {
@@ -35,28 +35,24 @@ const PersonsPage: React.FC = () => {
         <Table size="sm" responsive striped bordered hover>
           <thead>
             <tr>
-              <th>#</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th>Gender</th>
-              <th>Status</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {people.map((md) => (
               <tr key={md.id}>
-                <td>{md.id}</td>
                 <td>{md.firstName}</td>
                 <td>{md.lastName}</td>
                 <td>{md.email}</td>
-                <td>{md.gender}</td>
-                <td>{md.status ? "true" : "false"}</td>
+                <td>View</td>
               </tr>
             ))}
           </tbody>
         </Table>
-        <PaginationBar />
+        {/* <PaginationBar /> */}
       </Card.Body>
     </Card>
   );
