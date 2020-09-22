@@ -4,7 +4,6 @@ import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 
-// import PaginationBar from "../../components/pagination-bar/pagination-bar.component";
 import { Person } from "../../models/person";
 import { NavLink } from "react-router-dom";
 
@@ -55,7 +54,6 @@ const PersonsPage: React.FC = () => {
             ))}
           </tbody>
         </Table>
-        {/* <PaginationBar /> */}
       </Card.Body>
     </Card>
   );

@@ -3,6 +3,7 @@ import { Person } from "../../models/person";
 import { useParams } from "react-router-dom";
 
 import Spinner from "react-bootstrap/Spinner";
+import Card from "react-bootstrap/Card";
 
 const PersonDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,14 +29,21 @@ const PersonDetailsPage: React.FC = () => {
   }
 
   return (
-    <div>
-      <div>Id: {person?.id}</div>
-      <div>First Name: {person?.firstName}</div>
-      <div>Last Name: {person?.lastName}</div>
-      <div>Email: {person?.email}</div>
-      <div>First Name: {person?.gender}</div>
-      <div>Status: {person?.status ? "Yes" : "No"}</div>
-    </div>
+    <Card>
+      <Card.Body>
+        <Card.Title>
+          {person?.firstName} {person?.lastName}
+        </Card.Title>
+        <div>
+          <div>Id: {person?.id}</div>
+          <div>First Name: {person?.firstName}</div>
+          <div>Last Name: {person?.lastName}</div>
+          <div>Email: {person?.email}</div>
+          <div>First Name: {person?.gender}</div>
+          <div>Status: {person?.status ? "Yes" : "No"}</div>
+        </div>
+      </Card.Body>
+    </Card>
   );
 };
 
