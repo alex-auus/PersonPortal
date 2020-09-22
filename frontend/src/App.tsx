@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import "./App.scss";
 
@@ -22,9 +22,10 @@ const App: React.FC = () => {
         <Row>
           <Col>
             <Switch>
-              <Route exact path="/" component={PersonsPage} />
+              <Route exact path="/people" component={PersonsPage} />
               <Route exact path="/add-person" component={AddPersonPage} />
-              <Route exact path="/:id" component={PersonDetailsPage} />
+              <Route exact path="/people/:id" component={PersonDetailsPage} />
+              <Redirect exact path="/" to="/people" />
               <Route component={NotFoundPage} />
             </Switch>
           </Col>

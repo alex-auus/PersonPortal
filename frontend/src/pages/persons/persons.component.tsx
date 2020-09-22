@@ -6,6 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 // import PaginationBar from "../../components/pagination-bar/pagination-bar.component";
 import { Person } from "../../models/person";
+import { NavLink } from "react-router-dom";
 
 const PersonsPage: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
@@ -42,12 +43,14 @@ const PersonsPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {people.map((md) => (
-              <tr key={md.id}>
-                <td>{md.firstName}</td>
-                <td>{md.lastName}</td>
-                <td>{md.email}</td>
-                <td>View</td>
+            {people.map((p) => (
+              <tr key={p.id}>
+                <td>{p.firstName}</td>
+                <td>{p.lastName}</td>
+                <td>{p.email}</td>
+                <td>
+                  <NavLink to={`/people/${p.id}`}>View</NavLink>
+                </td>
               </tr>
             ))}
           </tbody>

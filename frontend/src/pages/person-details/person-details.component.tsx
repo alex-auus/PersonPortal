@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Person } from "../../models/person";
+import { useParams } from "react-router-dom";
 
 import Spinner from "react-bootstrap/Spinner";
 
 const PersonDetailsPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [person, setPerson] = useState<Person>();
 
   useEffect(() => {
     setIsLoading(true);
-    fetch("https://localhost:5001/people/1")
+    fetch(`https://localhost:5001/people/${id}`)
       .then((response) => response.json())
       .then((response) => {
         setPerson(response);
         setIsLoading(false);
       });
-  }, []);
+  }, [id]);
 
   if (isLoading) {
     return (
