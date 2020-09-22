@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PeoplePortal.Data.PeopleRepository;
@@ -12,11 +14,6 @@ namespace PeoplePortal.Api.Controllers
     [Route("[controller]")]
     public class PeopleController : ControllerBase
     {
-        static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         readonly ILogger<PeopleController> _logger;
         IPeopleRepository peopleRepository;
         public PeopleController(ILogger<PeopleController> logger, IPeopleRepository peopleRepository)
@@ -27,18 +24,39 @@ namespace PeoplePortal.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IEnumerable<Person> GetPeople()
         {
-            var people = peopleRepository.GetAll();
-            
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            // todo need to add pagination
+            var result = peopleRepository.GetAll();
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Person> GetPerson(int id)
+        {
+            var person = peopleRepository.Find(id);
+
+            if (person == null)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return NotFound();
+            }
+
+            return person;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public ActionResult Post(Person person)
+        {
+            Thread.Sleep(2000); // to simulate processing time to be able to see busy indicator
+            
+            // TODO need to add validation possibly using action filter
+            person = peopleRepository.CreatePerson(person);
+
+            return CreatedAtAction(nameof(GetPerson), new { id = person.Id }, person);
         }
     }
 }

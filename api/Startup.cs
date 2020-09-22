@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using PeoplePortal.Data.PeopleRepository;
 
 namespace PeoplePortal.Api
 {
     public class Startup
     {
+        readonly string allowAllOrigins = "_allowAllOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +21,19 @@ namespace PeoplePortal.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPeopleRepository, PeopleRepository>();
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(allowAllOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                                  });
+            });
+
             services.AddControllers();
         }
 
@@ -37,6 +44,8 @@ namespace PeoplePortal.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(allowAllOrigins);
 
             app.UseHttpsRedirection();
 

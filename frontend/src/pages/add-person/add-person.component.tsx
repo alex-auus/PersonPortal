@@ -6,24 +6,63 @@ import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
+import Spinner from "react-bootstrap/Spinner";
+
+import { Person } from "../../models/person";
 
 const AddPersonPage = () => {
-  const [validated, setValidated] = useState(false);
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    gender: "",
-    status: true,
+  const [pageStatus, setPageStatus] = useState({
+    validated: false,
+    successfulCreate: false,
+    isBusy: false,
   });
 
-  const handleSubmit = (event: React.FormEvent<HTMLInputElement>) => {
+  const [formData, setFormData] = useState<Person>(blankForm);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
+    setPageStatus({
+      successfulCreate: false,
+      isBusy: false,
+      validated: true,
+    });
+
+    event.preventDefault();
+    event.stopPropagation();
+
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+    if (form.checkValidity() === true) {
+      setPageStatus({
+        ...pageStatus,
+        isBusy: true,
+      });
+
+      try {
+        const response = await fetch("https://localhost:5001/people", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        setPageStatus({
+          ...pageStatus,
+          isBusy: false,
+        });
+
+        if (response.status === 201) {
+          setPageStatus({
+            ...pageStatus,
+            validated: false,
+            successfulCreate: true,
+          });
+          setFormData(blankForm);
+        } else {
+          console.log(response);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
-    setValidated(true);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +77,14 @@ const AddPersonPage = () => {
     <Card>
       <Card.Body>
         <Card.Title>Add person</Card.Title>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        {pageStatus.successfulCreate && (
+          <Alert variant="success">Person added successfully!</Alert>
+        )}
+        <Form
+          noValidate
+          validated={pageStatus.validated}
+          onSubmit={handleSubmit}
+        >
           <Form.Row>
             <Form.Group as={Col} md="6" controlId="formFirstName">
               <Form.Label>First name</Form.Label>
@@ -151,19 +197,32 @@ const AddPersonPage = () => {
               />
             </Form.Group>
           </fieldset>
-          <Button type="submit">Submit form</Button>
+          {pageStatus.isBusy ? (
+            <Button variant="primary" disabled>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="sr-only">Loading...</span>
+            </Button>
+          ) : (
+            <Button type="submit">Submit form</Button>
+          )}
         </Form>
       </Card.Body>
     </Card>
   );
 };
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  gender: string;
-  status: boolean;
-}
+const blankForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  gender: "",
+  status: true,
+};
 
 export default AddPersonPage;

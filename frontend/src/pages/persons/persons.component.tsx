@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
-
-import MOCK_DATA from "./MOCK_DATA.json";
+import Spinner from "react-bootstrap/Spinner";
 
 import PaginationBar from "../../components/pagination-bar/pagination-bar.component";
+import { Person } from "../../models/person";
 
 const PersonsPage: React.FC = () => {
+  const [people, setPeople] = useState<Person[]>([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://localhost:5001/people")
+      .then((response) => response.json())
+      .then((response) => {
+        setPeople(response);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
+  }
+
   return (
     <Card>
       <Card.Body>
@@ -24,11 +44,11 @@ const PersonsPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {MOCK_DATA.slice(0, 11).map((md) => (
+            {people.map((md) => (
               <tr key={md.id}>
                 <td>{md.id}</td>
-                <td>{md.first_name}</td>
-                <td>{md.last_name}</td>
+                <td>{md.firstName}</td>
+                <td>{md.lastName}</td>
                 <td>{md.email}</td>
                 <td>{md.gender}</td>
                 <td>{md.status ? "true" : "false"}</td>
